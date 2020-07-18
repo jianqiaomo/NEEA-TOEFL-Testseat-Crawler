@@ -73,6 +73,7 @@ class GetToeflTestInfos():
         except:
             print("Your webdriver executable path is wrong: Cannot start webdriver.")
             print("Please use --webdriver_path to set webdriver executable path")
+            print('See https://github.com/893374759/crawler_TOEFL#%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F-install')
             raise
 
         self.wait = WebDriverWait(self.driver, timeout=50)
