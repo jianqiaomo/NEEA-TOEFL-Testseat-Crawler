@@ -153,6 +153,8 @@ class GetToeflTestInfos():
         submit_button.click()
         # Check if the login is successful
         try:
+            #TODO: http 500 error
+            print(self.driver.title)
             success = self.wait.until(
                 EC.text_to_be_present_in_element((By.XPATH, '//div[@class="myhome_info_cn"]/span[2]'), self.username)
             )
@@ -234,7 +236,7 @@ class GetToeflTestInfos():
                       encoding='utf-8-sig', newline='')
         writer = csv.writer(csv_fp)
         try:
-            is_success = EC.text_to_be_present_in_element((By.XPATH, '//div[@id="qrySeatResult"]/h4'), "考位查询结果")(
+            is_success = EC.text_to_be_present_in_element((By.XPATH, '//td[@style="text-align:center;vertical-align: middle"]'), s_city)(
                 self.driver)
         except:
             is_success = 0
@@ -271,14 +273,31 @@ class GetToeflTestInfos():
                     (By.XPATH, '//table[@class="table table-bordered table-striped"][{}]/tbody/tr'.format(i))
                 )
             )
-            for item in items:
-                body_dict = {}
-                body_dict["test_city"] = item.find_element_by_xpath('./td[1]').text
-                body_dict["test_venues"] = item.find_element_by_xpath('./td[2]').text
-                body_dict["test_fee"] = item.find_element_by_xpath('./td[3]').text
-                body_dict["test_seat"] = item.find_element_by_xpath('./td[4]').text
-                writer.writerow(body_dict.values())
-                print(body_dict)
+            try:
+                for item in items:
+                    body_dict = {}
+                    body_dict["test_city"] = item.find_element_by_xpath('./td[1]').text
+                    body_dict["test_venues"] = item.find_element_by_xpath('./td[2]').text
+                    body_dict["test_fee"] = item.find_element_by_xpath('./td[3]').text
+                    body_dict["test_seat"] = item.find_element_by_xpath('./td[4]').text
+                    writer.writerow(body_dict.values())
+                    print(body_dict)
+            except:
+                items = self.wait.until(
+                    EC.presence_of_all_elements_located(
+                        (By.XPATH, '//table[@class="table table-bordered table-striped"][{}]/tbody/tr'.format(i))
+                    )
+                )
+                print(['refresh occur!'])
+                writer.writerow(['refresh occur!'])
+                for item in items:
+                    body_dict = {}
+                    body_dict["test_city"] = item.find_element_by_xpath('./td[1]').text
+                    body_dict["test_venues"] = item.find_element_by_xpath('./td[2]').text
+                    body_dict["test_fee"] = item.find_element_by_xpath('./td[3]').text
+                    body_dict["test_seat"] = item.find_element_by_xpath('./td[4]').text
+                    writer.writerow(body_dict.values())
+                    print(body_dict)
         else:
             null_line = [self.CITY, self.DATE, "未查询到考位信息"]
             print(null_line)

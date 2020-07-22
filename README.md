@@ -42,10 +42,11 @@ When finished, you can get a .csv form file. 爬虫完成后将得到.csv表格�
 </div>
 
 ### Todo:
-1. faster 爬虫速度太慢了
+1. faster, test time is 25min 爬虫速度太慢了, 爬完全部数据目前需要30分钟
 2. headless mode 无界面模式怎么绕开反爬虫?
 3. Anti anti-crawler when click the 'search seats' button 怎么绕开反爬虫?
 4. online crawler (use a server) 在线爬虫(服务器)
+5. different modes 用户定制化爬虫
 
 ### Acknowledgement
 This idea is initially coming from https://www.jianshu.com/p/2541d918869e, thanks!  
